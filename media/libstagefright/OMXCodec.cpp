@@ -2064,6 +2064,9 @@ OMXCodec::OMXCodec(
               (!strncmp(componentName, "OMX.google.", 11)
               || !strcmp(componentName, "OMX.Nvidia.mpeg2v.decode"))
                         ? NULL : nativeWindow) {
+#ifdef QCOM_HARDWARE
+    parseFlags();
+#endif
     mPortStatus[kPortIndexInput] = ENABLED;
     mPortStatus[kPortIndexOutput] = ENABLED;
 
@@ -5903,10 +5906,10 @@ status_t OMXCodec::pause() {
 
 }
 #ifdef QCOM_HARDWARE
-void OMXCodec::parseFlags(uint32_t flags) {
+void OMXCodec::parseFlags() {
     //TODO - uncomment if needed
     //    mGPUComposition = ((flags & kEnableGPUComposition) ? true : false);
-    mThumbnailMode = ((flags & kEnableThumbnailMode) ? true : false);
+    mThumbnailMode = ((mFlags & kEnableThumbnailMode) ? true : false);
 }
 #endif
 
