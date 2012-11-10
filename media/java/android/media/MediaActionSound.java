@@ -17,6 +17,7 @@
 package android.media;
 
 import android.media.AudioManager;
+import android.os.SystemProperties;
 import android.media.SoundPool;
 import android.util.Log;
 
@@ -120,6 +121,15 @@ public class MediaActionSound {
         if (soundName < 0 || soundName >= SOUND_FILES.length) {
             throw new RuntimeException("Unknown sound requested: " + soundName);
         }
+
+        int systemMute = SystemProperties.getInt("ro.camera.sound.disabled", 0);
+        int userMute = SystemProperties.getInt("persist.sys.camera-mute", 0);
+
+        if(systemMute > 0 || userMute > 0) {
+            Log.i(TAG, "Camera is muted. Skipping playback..");
+            return;
+        }
+
         if (mSoundIds[soundName] == SOUND_NOT_LOADED) {
             mSoundIds[soundName] =
                     mSoundPool.load(SOUND_FILES[soundName], 1);
