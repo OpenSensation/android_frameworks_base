@@ -1128,6 +1128,7 @@ public class MediaRecorder
 				pSetMan.notification(packageName[0], 0, PrivacySettings.REAL, PrivacySettings.DATA_CAMERA, null, null);
 			else if(packageName != null && packageName.length > 0)
 				pSetMan.notification(packageName[0], 0, PrivacySettings.REAL, PrivacySettings.DATA_RECORD_AUDIO, null, null);
+			deletedFile = true;
 		}
 
         if (mPath != null) {
