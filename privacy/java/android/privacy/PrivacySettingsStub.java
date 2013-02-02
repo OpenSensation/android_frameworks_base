@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2012 Svyatoslav Hresyk
+ * Copyright (C) 2012 Simeon J Morgan <smorgan@digitalfeed.net>
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 3 of the License, or (at your option) any later version.
@@ -11,19 +11,18 @@
  */
 
 package android.privacy;
-import android.privacy.PrivacySettings;
 
-/** {@hide} */
-interface IPrivacySettingsManager
-{
-    PrivacySettings getSettings(String packageName);
-    boolean saveSettings(in PrivacySettings settings);
-    boolean deleteSettings(String packageName);
-    void notification(String packageName, byte accessMode, String dataType, String output);
-    void registerObservers();
-    void addObserver(String packageName);
-    boolean purgeSettings();
-    boolean setEnabled(boolean enable);
-    boolean setNotificationsEnabled(boolean enable);
-    void setBootCompleted();
+/**
+ * Acts as a placeholder where PrivacySettings are absent (for caching).
+ * DO NOT USE THIS ANYWHERE BUT CACHING! Because it is not final, it can be subclassed, and various other
+ * nasty tricks can be used to open security issues
+ * @author Simeon J Morgan 
+ * {@hide} 
+ */
+class PrivacySettingsStub {
+    private final static boolean isStub = true;
+    
+    boolean isStub() {
+        return isStub;
+    }
 }

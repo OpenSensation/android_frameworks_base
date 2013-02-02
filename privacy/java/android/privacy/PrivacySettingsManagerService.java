@@ -34,6 +34,7 @@ public final class PrivacySettingsManagerService extends IPrivacySettingsManager
     private static final String WRITE_PRIVACY_SETTINGS = "android.privacy.WRITE_PRIVACY_SETTINGS";
     private static final String READ_PRIVACY_SETTINGS = "android.privacy.READ_PRIVACY_SETTINGS";
 
+    private static boolean sendNotifications = true; 
     private PrivacyPersistenceAdapter persistenceAdapter;
     
     private Context context;
@@ -44,7 +45,12 @@ public final class PrivacySettingsManagerService extends IPrivacySettingsManager
     private boolean notificationsEnabled;
     private boolean bootCompleted;
 
-    private static final double VERSION = 1.51;
+    static final double API_VERSION = 1.51;
+    static final double MOD_VERSION = 1.0;
+    static final String MOD_DETAILS = "OpenPDroid 1.0 by FFU5y, Mateor, wbedard; forked from PDroid 2.0\n" +
+    		"PDroid 2.0 by CollegeDev; forked from PDroid\n" +
+    		"PDroid by Syvat's\n" +
+    		"Additional contributions by Pastime1971";
 
     /**
      * @hide - this should be instantiated through Context.getSystemService
@@ -110,13 +116,9 @@ public final class PrivacySettingsManagerService extends IPrivacySettingsManager
         return result;
     }
 
-    public double getVersion() {
-        return VERSION;
-    }
-
     public void notification(final String packageName, final byte accessMode,
             final String dataType, final String output) {
-        if (bootCompleted && notificationsEnabled) {
+        if (bootCompleted && notificationsEnabled && sendNotifications) {
             Intent intent = new Intent();
             intent.setAction(PrivacySettingsManager.ACTION_PRIVACY_NOTIFICATION);
             intent.putExtra("packageName", packageName);
@@ -233,4 +235,5 @@ public final class PrivacySettingsManagerService extends IPrivacySettingsManager
 			return false;
 		}
 	}
+	
 }
